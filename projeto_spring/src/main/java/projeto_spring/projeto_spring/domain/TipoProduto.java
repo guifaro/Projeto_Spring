@@ -37,10 +37,10 @@ public class TipoProduto {
 	private String name;
 	
 //1 para mensal;0 para nao avulso
-	@Column(name = "TipoProduto_pagamento", nullable = false, length = 100)
+	@Column(name = "TipoProduto_pagamento", nullable = false)
 	private boolean pagamento;
 	
 //1 para unico;0 para nao unico
-	@Column(name = "TipoProduto_unico", nullable = false, length = 100)
+	@Column(name = "TipoProduto_unico", nullable = false)
 	private boolean unico;
 }
