@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -24,23 +26,24 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "TipoProduto")
+@Table(name = "tipoproduto")
+
 
 public class TipoProduto {
 
 	@GeneratedValue
 	@Id
-	@Column(name = "TipoProduto_id")
+	@Column(name = "tipoproduto_id")
 	private Long id;
 
-	@Column(name = "TipoProduto_name", nullable = false, length = 200)
+	@Column(name = "tipoproduto_name", nullable = false, length = 200)
 	private String name;
 	
-//1 para mensal;0 para nao avulso
-	@Column(name = "TipoProduto_pagamento", nullable = false)
-	private boolean pagamento;
+	@Column(name = "tipoproduto_pagamento", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Pagamento pagamento;
 	
 //1 para unico;0 para nao unico
-	@Column(name = "TipoProduto_unico", nullable = false)
-	private boolean unico;
+	@Column(name = "tipoproduto_unico", nullable = false)
+	private Boolean unico;
 }

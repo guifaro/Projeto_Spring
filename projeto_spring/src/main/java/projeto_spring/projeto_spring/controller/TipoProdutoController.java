@@ -97,18 +97,19 @@ public class TipoProdutoController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public TipoProdutoDTO delete(@PathVariable("id") Long id) {
 
-		TipoProduto city = repository.findOne(id);
+		TipoProduto tipoproduto = repository.findOne(id);
 
-		if (city == null) {
+		if (tipoproduto == null) {
 			throw new NotFoundException(TipoProduto.class);
 		}
+		
 		//if (hotelRepository.countByCity(city) > 0) {
 			//throw new WebException(HttpStatus.PRECONDITION_FAILED, "city.hasHotel");
 		//}
 
-		this.repository.delete(city);
+		this.repository.delete(tipoproduto);
 
-		return convert.toDTO(city);
+		return convert.toDTO(tipoproduto);
 	}
 
 }
