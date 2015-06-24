@@ -229,4 +229,12 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 		    .expectedStatus(HttpStatus.NOT_FOUND)
 		    .getResponse();
 	}
+	
+	@Test
+	public void test() {
+		User xxx = admin("xxx").build();
+		saveall(xxx);
+		signIn(xxx);
+
+	}
 }
