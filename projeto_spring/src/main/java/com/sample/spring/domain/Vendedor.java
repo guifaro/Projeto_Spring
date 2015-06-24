@@ -1,11 +1,11 @@
 package com.sample.spring.domain;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,17 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "produto")
+@Table(name = "vendedor")
 
-public class Produto {
+public class Vendedor {
 	
 	@GeneratedValue
 	@Id
-	@Column(name = "produto_id")
+	@Column(name = "vendedor_id")
 	private Long id;
 
-	@Column(name = "produto_name", nullable = false, length = 200)
+	@Column(name = "vendedor_name", nullable = false, length = 200)
 	private String name;
-	
 
 }

@@ -34,31 +34,32 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 	
 	@Test
 	public void testList() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		TipoProduto x2 = tipoproduto("SCANNER",Pagamento.AVULSO).build();
-		saveall(x1, x2, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		TipoProduto cloud = tipoproduto("Cloud",Pagamento.AVULSO).build();
+		
+		saveall(scanner, cloud, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
 		Page<TipoProdutoDTO> page = get("/tipoproduto").expectedStatus(HttpStatus.OK).getPage(TipoProdutoDTO.class);
 
 		assertThat(page.getNumber(), equalTo(0));
 		assertThat(page.getSize(), equalTo(50));
-		assertThat(page.getContent(), contains(convert.toDTO(x2), convert.toDTO(x1)));
+		assertThat(page.getContent(), contains(convert.toDTO(cloud), convert.toDTO(scanner)));
 	}
 
 	@Test
 	public void testeListWithPagination() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		TipoProduto x2 = tipoproduto("SCANNER",Pagamento.AVULSO).build();
-		TipoProduto x3 = tipoproduto("Cloud2",Pagamento.MENSAL).build();
-		TipoProduto x4 = tipoproduto("SCANNER2",Pagamento.AVULSO).build();
-		TipoProduto x5 = tipoproduto("Cloud3",Pagamento.MENSAL).build();
-		saveall(x1, x2, x3, x4, x5, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		TipoProduto cloud = tipoproduto("Cloud",Pagamento.AVULSO).build();
+		TipoProduto notebook = tipoproduto("Notebook",Pagamento.MENSAL).build();
+		TipoProduto browser = tipoproduto("Browser",Pagamento.MENSAL).build();
+		TipoProduto webbrowser = tipoproduto("WebBrowser",Pagamento.AVULSO).build();
+		saveall(scanner, cloud, notebook, browser, webbrowser, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
 		Page<TipoProdutoDTO> page = get("/tipoproduto").queryParam("page", "0").queryParam("size", "2").expectedStatus(HttpStatus.OK)
 		    .getPage(TipoProdutoDTO.class);
@@ -68,7 +69,7 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 		assertThat(page.getTotalElements(), equalTo(5l));
 		assertThat(page.getTotalPages(), equalTo(3));
 		assertThat(page.getContent(), hasSize(2));
-		assertThat(page.getContent(), contains(convert.toDTO(x1), convert.toDTO(x2)));
+		assertThat(page.getContent(), contains(convert.toDTO(browser), convert.toDTO(cloud)));
 
 		page = get("/tipoproduto").queryParam("size", "2").queryParam("page", "2").expectedStatus(HttpStatus.OK).getPage(TipoProdutoDTO.class);
 
@@ -77,65 +78,65 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 		assertThat(page.getTotalElements(), equalTo(5l));
 		assertThat(page.getTotalPages(), equalTo(3));
 		assertThat(page.getContent(), hasSize(1));
-		assertThat(page.getContent(), contains(convert.toDTO(x5)));
+		assertThat(page.getContent(), contains(convert.toDTO(webbrowser)));
 	}
 
 	@Test
 	public void testSearchByName() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		TipoProduto x2 = tipoproduto("SCANNER",Pagamento.AVULSO).build();
-		saveall(x1, x2, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		TipoProduto cloud = tipoproduto("Cloud",Pagamento.AVULSO).build();		
+		saveall(scanner, cloud, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
-		Page<TipoProdutoDTO> page = get("/tipoproduto").queryParam("search", "loud").expectedStatus(HttpStatus.OK).getPage(TipoProdutoDTO.class);
+		Page<TipoProdutoDTO> page = get("/tipoproduto").queryParam("search", "NNER").expectedStatus(HttpStatus.OK).getPage(TipoProdutoDTO.class);
 
 		assertThat(page.getNumber(), equalTo(0));
 		assertThat(page.getSize(), equalTo(50));
 		assertThat(page.getTotalElements(), equalTo(1L));
-		assertThat(page.getContent(), contains(convert.toDTO(x1)));
+		assertThat(page.getContent(), contains(convert.toDTO(scanner)));
 	}
 
 	@Test
 	public void testSearchByPagamento() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		TipoProduto x2 = tipoproduto("SCANNER",Pagamento.AVULSO).build();
-		saveall(x1, x2, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		TipoProduto cloud = tipoproduto("Cloud",Pagamento.AVULSO).build();		
+		saveall(scanner, cloud, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
 		Page<TipoProdutoDTO> page = get("/tipoproduto").queryParam("search", "MENSAL").expectedStatus(HttpStatus.OK).getPage(TipoProdutoDTO.class);
 
 		assertThat(page.getNumber(), equalTo(0));
 		assertThat(page.getSize(), equalTo(50));
 		assertThat(page.getTotalElements(), equalTo(1L));
-		assertThat(page.getContent(), contains(convert.toDTO(x2)));
+		assertThat(page.getContent(), contains(convert.toDTO(scanner)));
 	}
 
 	@Test
 	public void testRead() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		saveall(x1, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		saveall(scanner, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
-		ResponseEntity<TipoProdutoDTO> response = get("/tipoproduto/%s", x1.getId()).expectedStatus(HttpStatus.OK).getResponse(TipoProdutoDTO.class);
+		ResponseEntity<TipoProdutoDTO> response = get("/tipoproduto/%s", scanner.getId()).expectedStatus(HttpStatus.OK).getResponse(TipoProdutoDTO.class);
 
-		assertThat(response.getBody(), equalTo(convert.toDTO(x1)));
+		assertThat(response.getBody(), equalTo(convert.toDTO(scanner)));
 	}
 	
 	@Test
 	public void testCreate() throws JsonProcessingException, IOException {
-		User xxx = admin("xxx").build();
-		saveall(xxx);
-		signIn(xxx);
+		User guilherme = admin("guilherme").build();
+		saveall(guilherme);
+		signIn(guilherme);
 
 		String name = "Scanner";
 		Pagamento pagamento = Pagamento.AVULSO;
-		Boolean unico = false;
+		Boolean unico = true;
 
 		TipoProduto tipoproduto = tipoproduto(name,pagamento).build();
 
@@ -154,21 +155,21 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 
 	@Test
 	public void testUpdate() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		saveall(x1, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		saveall(scanner, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
 		String name = "Scanner";
 		Pagamento pagamento = Pagamento.AVULSO;
 		Boolean unico = false;
-		x1.setName(name);
-		x1.setPagamento(pagamento);
-		x1.setUnico(unico);
+		scanner.setName(name);
+		scanner.setPagamento(pagamento);
+		scanner.setUnico(unico);
 
-		ResponseEntity<TipoProdutoDTO> response = put("/tipoproduto/%s", x1.getId())
-		    .json(x1)
+		ResponseEntity<TipoProdutoDTO> response = put("/tipoproduto/%s", scanner.getId())
+		    .json(scanner)
 		    .expectedStatus(HttpStatus.OK)
 		    .getResponse(TipoProdutoDTO.class);
 
@@ -177,7 +178,7 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 		assertThat(response.getBody().getUnico(), equalTo(unico));
 
 
-		TipoProduto x = tipoprodutoRepository.findOne(x1.getId());
+		TipoProduto x = tipoprodutoRepository.findOne(scanner.getId());
 
 		assertThat(x.getName(), equalTo(name));
 		assertThat(x.getPagamento(), equalTo(pagamento));
@@ -186,18 +187,18 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 
 	@Test
 	public void testDelete() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		saveall(x1, xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		saveall(scanner, guilherme);
 
-		signIn(xxx);
+		signIn(guilherme);
 
 
 		assertThat(tipoprodutoRepository.findAll(), hasSize(1));
 
-		ResponseEntity<TipoProdutoDTO> response = delete("/tipoproduto/%s", x1.getId()).expectedStatus(HttpStatus.OK).getResponse(TipoProdutoDTO.class);
+		ResponseEntity<TipoProdutoDTO> response = delete("/tipoproduto/%s", scanner.getId()).expectedStatus(HttpStatus.OK).getResponse(TipoProdutoDTO.class);
 
-		assertThat(response.getBody().getId(), equalTo(x1.getId()));
+		assertThat(response.getBody().getId(), equalTo(scanner.getId()));
 		assertThat(tipoprodutoRepository.findAll(), hasSize(0));
 	}
 	
@@ -219,22 +220,15 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 
 	@Test
 	public void testUpdateNotFound() {
-		User xxx = admin("xxx").build();
-		TipoProduto x1 = tipoproduto("Cloud",Pagamento.MENSAL).build();
-		saveall(x1, xxx);
-		signIn(xxx);
+		User guilherme = admin("guilherme").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		saveall(scanner, guilherme);
 
-		put("/tipoproduto/%s", x1.getId() + 1)
-		    .json(convert.toDTO(x1))
+		signIn(guilherme);
+
+		put("/tipoproduto/%s", scanner.getId() + 1)
+		    .json(convert.toDTO(scanner))
 		    .expectedStatus(HttpStatus.NOT_FOUND)
 		    .getResponse();
-	}
-	
-	@Test
-	public void test() {
-		User xxx = admin("xxx").build();
-		saveall(xxx);
-		signIn(xxx);
-
 	}
 }
