@@ -1,10 +1,22 @@
--- Create syntax for TABLE 'tipoproduto'
-CREATE TABLE `tipoproduto` (
-  `tipoproduto_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tipoproduto_pagamento` varchar(100) NOT NULL,
-  `tipoproduto_name` varchar(200) NOT NULL,
-  `tipoproduto_unico` bit(1) NOT NULL,
-  PRIMARY KEY (`tipoproduto_id`)
+-- Create syntax for TABLE 'city'
+CREATE TABLE `city` (
+  `city_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `city_country` varchar(100) NOT NULL,
+  `city_name` varchar(200) NOT NULL,
+  `city_state` varchar(100) NOT NULL,
+  PRIMARY KEY (`city_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Create syntax for TABLE 'hotel'
+CREATE TABLE `hotel` (
+  `hote_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `hote_address` varchar(255) NOT NULL,
+  `hote_tipo` varchar(255) NOT NULL,
+  `hote_zip` varchar(255) NOT NULL,
+  `city_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`hote_id`),
+  KEY `FK_CITY_HOTEL` (`city_id`),
+  CONSTRAINT `FK_CITY_HOTEL` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'user'
