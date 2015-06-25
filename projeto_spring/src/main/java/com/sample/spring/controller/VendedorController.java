@@ -79,9 +79,8 @@ public class VendedorController {
 		Vendedor vendedor = repository.findByName(dto.getName());
 		
 		if (vendedor != null) {
-			new WebException(HttpStatus.PRECONDITION_FAILED, mensagem);
+			throw new WebException(HttpStatus.PRECONDITION_FAILED, mensagem);
 		}
-		
 		Vendedor entity = convert.toEntity(dto);
 		entity = repository.save(entity);
 		return convert.toDTO(entity);
@@ -93,10 +92,18 @@ public class VendedorController {
 	public VendedorDTO update(@PathVariable("ref") Long ref, @Valid @RequestBody VendedorDTO dto) {
 		Vendedor entity = repository.findOne(ref);
 		Vendedor vendedor = repository.findByName(dto.getName());
+		String mensagem = "vendedor.already.inUse";
+		
 		if (entity == null) {
 			throw new NotFoundException(Vendedor.class);
 		}
+		
 		convert.updateEntity(entity, dto, "id", "natures");
+		if (vendedor != null) {
+			if (entity.getName() == vendedor.getName()){
+				throw new WebException(HttpStatus.PRECONDITION_FAILED, mensagem);
+			}
+		}
 		entity = repository.save(entity);
 		return convert.toDTO(entity);
 	}

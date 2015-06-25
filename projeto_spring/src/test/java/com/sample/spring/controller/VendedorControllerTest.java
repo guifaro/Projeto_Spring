@@ -129,6 +129,23 @@ public class VendedorControllerTest extends ApplicationTest {
 
 		assertThat(vendedorRepository.findAll(), hasSize(1));
 	}
+	
+	@Test
+	public void testCreateInvalid() throws JsonProcessingException, IOException {
+		User guilherme = admin("guilherme").build();
+		Vendedor jose = vendedor("Jose Maria").build();
+		saveall(guilherme, jose);
+		signIn(guilherme);
+
+		String name = "Jose Maria";
+		
+		Vendedor vendedor = vendedor(name).build();
+
+		post("/vendedor")
+		    .json(convert.toDTO(vendedor))
+		    .expectedStatus(HttpStatus.PRECONDITION_FAILED)
+		    .getResponse(VendedorDTO.class);
+	}
 
 	@Test
 	public void testUpdate() {
@@ -152,6 +169,24 @@ public class VendedorControllerTest extends ApplicationTest {
 
 		assertThat(fernando.getName(), equalTo(name));
 	}
+	
+	@Test
+	public void testUpdateInvalid() {
+		User guilherme = admin("guilherme").build();
+		Vendedor roberto = vendedor("Roberto Carlos").build();
+		Vendedor pedro = vendedor("Pedro Arantes").build();
+		saveall(roberto, pedro, guilherme);
+
+		signIn(guilherme);
+
+		String name = "Pedro Arantes";
+		roberto.setName(name);
+
+		put("/vendedor/%s", roberto.getId() + 1)
+	    .json(convert.toDTO(roberto))
+	    .expectedStatus(HttpStatus.PRECONDITION_FAILED)
+	    .getResponse();
+	}
 
 	@Test
 	public void testDelete() {
@@ -168,5 +203,35 @@ public class VendedorControllerTest extends ApplicationTest {
 
 		assertThat(response.getBody().getId(), equalTo(roberto.getId()));
 		assertThat(vendedorRepository.findAll(), hasSize(0));
+	}
+	
+	@Test
+	public void testReadNotFound() {
+		User bruno = admin("bruno").build();
+		saveall(bruno);
+		signIn(bruno);
+		get("/vendedor/1").expectedStatus(HttpStatus.NOT_FOUND).getResponse();
+	}
+
+	@Test
+	public void testDeleteNotFound() {
+		User bruno = admin("bruno").build();
+		saveall(bruno);
+		signIn(bruno);
+		delete("/vendedor/1").expectedStatus(HttpStatus.NOT_FOUND).getResponse();
+	}
+
+	@Test
+	public void testUpdateNotFound() {
+		User guilherme = admin("guilherme").build();
+		Vendedor roberto = vendedor("Roberto Carlos").build();
+		saveall(roberto, guilherme);
+
+		signIn(guilherme);
+
+		put("/vendedor/%s", roberto.getId() + 1)
+		    .json(convert.toDTO(roberto))
+		    .expectedStatus(HttpStatus.NOT_FOUND)
+		    .getResponse();
 	}
 }

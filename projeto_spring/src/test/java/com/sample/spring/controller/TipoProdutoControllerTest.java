@@ -2,11 +2,14 @@ package com.sample.spring.controller;
 
 import static com.sample.spring.compose.Compose.admin;
 import static com.sample.spring.compose.Compose.tipoproduto;
+import static com.sample.spring.compose.Compose.produto;
+
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+
 
 import java.io.IOException;
 
@@ -20,6 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sample.spring.ApplicationTest;
 import com.sample.spring.controller.dto.TipoProdutoDTO;
 import com.sample.spring.domain.Pagamento;
+import com.sample.spring.domain.Produto;
 import com.sample.spring.domain.TipoProduto;
 import com.sample.spring.domain.User;
 import com.sample.spring.repository.TipoProdutoRepository;
@@ -200,6 +204,19 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 
 		assertThat(response.getBody().getId(), equalTo(scanner.getId()));
 		assertThat(tipoprodutoRepository.findAll(), hasSize(0));
+	}
+	
+	@Test
+	public void testDeleteWithProduto() {
+		User bruno = admin("bruno").build();
+		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
+		Produto scannerdemesa = produto("",scanner).build();
+		saveall(scanner, scannerdemesa, bruno);
+		signIn(bruno);
+
+		assertThat(tipoprodutoRepository.findAll(), hasSize(1));
+
+		delete("/tipoproduto/%s", scanner.getId()).expectedStatus(HttpStatus.PRECONDITION_FAILED).getResponse();
 	}
 	
 	@Test

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sample.spring.controller.dto.TipoProdutoDTO;
 import com.sample.spring.domain.TipoProduto;
 import com.sample.spring.exception.NotFoundException;
+import com.sample.spring.exception.WebException;
+import com.sample.spring.repository.ProdutoRepository;
 import com.sample.spring.repository.TipoProdutoRepository;
 import com.sample.spring.security.Roles;
 import com.sample.spring.utils.MapperUtils;
@@ -39,6 +41,9 @@ public class TipoProdutoController {
 	
 	@Autowired
 	private TipoProdutoRepository repository;
+	
+	@Autowired
+	private ProdutoRepository produtoRepository;
 
 	@Transactional(readOnly = true)
 	@RequestMapping(method = RequestMethod.GET)
@@ -101,13 +106,13 @@ public class TipoProdutoController {
 			throw new NotFoundException(TipoProduto.class);
 		}
 		
-		//if (hotelRepository.countByCity(city) > 0) {
-			//throw new WebException(HttpStatus.PRECONDITION_FAILED, "city.hasHotel");
-		//}
+		if (produtoRepository.countByTipoProduto(tipoproduto) > 0) {
+			throw new WebException(HttpStatus.PRECONDITION_FAILED, "tipoproduto.hasProduto");
+		}
 
 		this.repository.delete(tipoproduto);
 
 		return convert.toDTO(tipoproduto);
 	}
+ }
 
-}

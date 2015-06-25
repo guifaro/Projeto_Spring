@@ -5,6 +5,8 @@ package com.sample.spring.compose;
 import com.sample.spring.domain.Pagamento;
 import com.sample.spring.domain.TipoProduto;
 import com.sample.spring.domain.TipoProduto.TipoProdutoBuilder;
+import com.sample.spring.domain.Produto;
+import com.sample.spring.domain.Produto.ProdutoBuilder;
 import com.sample.spring.domain.User;
 import com.sample.spring.domain.User.UserBuilder;
 import com.sample.spring.domain.Vendedor;
@@ -24,6 +26,10 @@ public class Compose {
 	
 	public static TipoProdutoBuilder tipoproduto(String name, Pagamento pagamento) {
 		return TipoProduto.builder().name(name).pagamento(pagamento).unico(true);
+	}
+	
+	public static ProdutoBuilder produto(String name, TipoProduto tipoproduto){
+		return Produto.builder().name(name).tipoproduto(tipoproduto);
 	}
 	public static VendedorBuilder vendedor(String name) {
 		return Vendedor.builder().name(name);
