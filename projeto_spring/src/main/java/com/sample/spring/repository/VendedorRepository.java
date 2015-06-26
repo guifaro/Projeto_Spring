@@ -9,7 +9,7 @@ import com.sample.spring.domain.Vendedor;
 
 public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 	
-	@Query("select v from Vendedor v where UPPER(c.name) like UPPER(?1)")
+	@Query("select v from Vendedor v where UPPER(v.name) like UPPER(?1)")
 	Page<Vendedor> search(String value, Pageable page);
 
 	Vendedor findByName(String name);

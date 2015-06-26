@@ -106,7 +106,7 @@ public class TipoProdutoController {
 			throw new NotFoundException(TipoProduto.class);
 		}
 		
-		if (produtoRepository.countByTipoProduto(tipoproduto) > 0) {
+		if (produtoRepository.countByTipoproduto(tipoproduto) > 0) {
 			throw new WebException(HttpStatus.PRECONDITION_FAILED, "tipoproduto.hasProduto");
 		}
 
