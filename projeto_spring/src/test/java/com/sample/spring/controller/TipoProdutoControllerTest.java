@@ -210,7 +210,7 @@ public class TipoProdutoControllerTest extends ApplicationTest {
 	public void testDeleteWithProduto() {
 		User bruno = admin("bruno").build();
 		TipoProduto scanner = tipoproduto("SCANNER",Pagamento.MENSAL).build();
-		Produto scannerdemesa = produto("",scanner).build();
+		Produto scannerdemesa = produto("SCANNERMesa",scanner).build();
 		saveall(scanner, scannerdemesa, bruno);
 		signIn(bruno);
 
