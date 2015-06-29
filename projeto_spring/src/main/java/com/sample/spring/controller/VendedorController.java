@@ -28,6 +28,7 @@ import com.sample.spring.controller.dto.VendedorDTO;
 import com.sample.spring.domain.Vendedor;
 import com.sample.spring.exception.NotFoundException;
 import com.sample.spring.exception.WebException;
+import com.sample.spring.repository.EmpresaRepository;
 import com.sample.spring.repository.VendedorRepository;
 import com.sample.spring.security.Roles;
 import com.sample.spring.utils.MapperUtils;
@@ -43,6 +44,9 @@ public class VendedorController {
 	
 	@Autowired
 	private VendedorRepository repository;
+	
+	@Autowired
+	private EmpresaRepository empresaRepository;
 	
 	@Transactional(readOnly = true)
 	@RequestMapping(method = RequestMethod.GET)
@@ -116,6 +120,10 @@ public class VendedorController {
 
 		if (Vendedor == null) {
 			throw new NotFoundException(Vendedor.class);
+		}
+		
+		if (empresaRepository.countByVendedor(Vendedor) > 0) {
+			throw new WebException(HttpStatus.PRECONDITION_FAILED, "Vendedor.hasEmpresa");
 		}
 		
 		this.repository.delete(Vendedor);

@@ -2,6 +2,7 @@ package com.sample.spring.controller;
 
 import static com.sample.spring.compose.Compose.admin;
 import static com.sample.spring.compose.Compose.vendedor;
+import static com.sample.spring.compose.Compose.empresa;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sample.spring.ApplicationTest;
 import com.sample.spring.controller.dto.VendedorDTO;
+import com.sample.spring.domain.Empresa;
 import com.sample.spring.domain.Vendedor;
 import com.sample.spring.domain.User;
 import com.sample.spring.repository.VendedorRepository;
@@ -204,6 +206,21 @@ public class VendedorControllerTest extends ApplicationTest {
 		assertThat(response.getBody().getId(), equalTo(roberto.getId()));
 		assertThat(vendedorRepository.findAll(), hasSize(0));
 	}
+	
+	@Test
+	public void testDeleteWithEmpresa() {
+		User guilherme = admin("guilherme").build();
+		Vendedor roberto = vendedor("Roberto Carlos").build();
+		Empresa reds = empresa("Red",roberto, "RedsPark Ltd").build();
+		saveall(roberto, reds, guilherme);
+		signIn(guilherme);
+
+		assertThat(vendedorRepository.findAll(), hasSize(1));
+
+		delete("/vendedor/%s", roberto.getId()).expectedStatus(HttpStatus.PRECONDITION_FAILED).getResponse();
+	}
+
+
 	
 	@Test
 	public void testReadNotFound() {
