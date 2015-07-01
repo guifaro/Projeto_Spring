@@ -2,7 +2,8 @@ package com.sample.spring.compose;
 
 
 
-import org.joda.time.LocalTime;
+
+import org.joda.time.LocalDate;
 
 import com.sample.spring.domain.Pagamento;
 import com.sample.spring.domain.TipoProduto;
@@ -40,7 +41,7 @@ public class Compose {
 	}
 	
 	public static EmpresaBuilder empresa(String name, Vendedor vendedor, String razao){
-		return Empresa.builder().name(name).vendedor(vendedor).razao(razao).cnpj("27675892000187").diaCorte(05).diaFaturamento(15).dtCadastro(new LocalTime());
+		return Empresa.builder().name(name).vendedor(vendedor).razao(razao).cnpj("27675892000187").diaCorte(05).diaFaturamento(15).dtCadastro(new LocalDate());
 	}
 	
 }

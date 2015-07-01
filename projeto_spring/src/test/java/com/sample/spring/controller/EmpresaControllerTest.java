@@ -55,7 +55,7 @@ public class EmpresaControllerTest extends ApplicationTest{
 	public void testeListWithPagination() {
 		User guilherme = admin("guilherme").build();
 		Vendedor pedro = vendedor("Pedro Pereira").build();
-		Empresa cloud = empresa("Cloud", pedro, "CloudComputing Ltd.").build();
+		Empresa cloud = empresa("Cloud", pedro, "CloudComputing Ltd").build();
 		Empresa boxcloud = empresa("Boxcloud", pedro, "Boxcloud Company").build();
 		Empresa dropbox = empresa("DropBox", pedro, "DropBox Company").build();
 		Empresa gcloud = empresa("Gcloud", pedro, "Gcloud Company Magnifc").build();

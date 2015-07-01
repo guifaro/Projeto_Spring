@@ -35,7 +35,7 @@ public class EmpresaDTO {
 	@NotNull(message = "property name can't be null")
 	private int dtFaturamento;
 	
-	@NotNull(message = "property name can't be null")
-	private LocalTime dtCadastro;
+	/*@NotNull(message = "property name can't be null")
+	private LocalTime dtCadastro;*/
 
 }

@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +54,7 @@ public class Empresa {
 	private int diaFaturamento;
 	
 	@Column(name = "empresa_dtcadastro", nullable = false)
-	private LocalTime dtCadastro;
+	private LocalDate dtCadastro;
 	
 	
 }
