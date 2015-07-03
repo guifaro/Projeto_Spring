@@ -1,8 +1,6 @@
 package com.sample.spring.controller;
 
 import static com.sample.spring.compose.Compose.admin;
-import static com.sample.spring.compose.Compose.produto;
-import static com.sample.spring.compose.Compose.tipoproduto;
 import static com.sample.spring.compose.Compose.vendedor;
 import static com.sample.spring.compose.Compose.empresa;
 import static org.hamcrest.Matchers.contains;
@@ -19,11 +17,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.sample.spring.ApplicationTest;
 import com.sample.spring.controller.dto.EmpresaDTO;
-import com.sample.spring.controller.dto.ProdutoDTO;
 import com.sample.spring.domain.Empresa;
-import com.sample.spring.domain.Pagamento;
-import com.sample.spring.domain.Produto;
-import com.sample.spring.domain.TipoProduto;
 import com.sample.spring.domain.Vendedor;
 import com.sample.spring.domain.User;
 import com.sample.spring.repository.VendedorRepository;
