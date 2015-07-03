@@ -15,7 +15,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
 			+ "or UPPER(e.name) like UPPER(?1)")
 	Page<Empresa> search(String value, Pageable page);
 	
-	@Query("select e from Empresa e left join e.vendedor v where e.id = ?1")
+	@Query("select e from Empresa e left join fetch e.vendedor v where e.id = ?1")
 	Empresa findByIdWithVendedor(Long id);
 	
 	

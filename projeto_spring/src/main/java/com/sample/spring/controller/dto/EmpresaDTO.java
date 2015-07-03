@@ -2,7 +2,9 @@ package com.sample.spring.controller.dto;
 
 import javax.validation.constraints.NotNull;
 
-import org.joda.time.LocalTime;
+
+
+
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,10 +32,10 @@ public class EmpresaDTO {
 	private String cnpj;
 	
 	@NotNull(message = "property name can't be null")
-	private int dtCorte;
+	private Integer diaCorte;
 	
 	@NotNull(message = "property name can't be null")
-	private int dtFaturamento;
+	private Integer diaFaturamento;
 	
 	/*@NotNull(message = "property name can't be null")
 	private LocalTime dtCadastro;*/

@@ -16,7 +16,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 			+ "or UPPER(p.name) like UPPER(?1)")
 	Page<Produto> search(String value, Pageable page);
 	
-	@Query("select p from Produto p left join p.tipoproduto t where p.id = ?1")
+	@Query("select p from Produto p left join fetch p.tipoproduto t where p.id = ?1")
 	Produto findByIdWithTipoProduto(Long id);
 	
 	

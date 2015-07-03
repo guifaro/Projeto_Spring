@@ -2,6 +2,7 @@ package com.sample.spring.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Empresa {
 	@Column(name = "empresa_id")
 	private Long id;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "vendedor_id", foreignKey = @ForeignKey(name = "FK_VENDEDOR_ID"))
 	private Vendedor vendedor;
 
@@ -48,10 +49,10 @@ public class Empresa {
 	private String cnpj;
 	
 	@Column(name = "empresa_dtcorte", nullable = false, length = 2)
-	private int diaCorte;
+	private Integer diaCorte;
 	
 	@Column(name = "empresa_dtfaturamento", nullable = false, length = 2)
-	private int diaFaturamento;
+	private Integer diaFaturamento;
 	
 	@Column(name = "empresa_dtcadastro", nullable = false)
 	private LocalDate dtCadastro;
