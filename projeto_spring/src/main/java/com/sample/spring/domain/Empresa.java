@@ -1,5 +1,8 @@
 package com.sample.spring.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
@@ -25,8 +29,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Table(name = "empresa")
-@EqualsAndHashCode(exclude = "vendedor")
-@ToString(exclude = "vendedor")
+@EqualsAndHashCode(exclude = {"vendedor","produtos"})
+@ToString(exclude = {"vendedor","produtos"})
 
 public class Empresa {
 	
@@ -56,6 +60,9 @@ public class Empresa {
 	
 	@Column(name = "empresa_dtcadastro", nullable = false)
 	private LocalDate dtCadastro;
+	
+	@OneToMany(mappedBy = "empresa")
+	private Set<EmpresaProduto> produtos = new HashSet<EmpresaProduto>();
 	
 	
 }

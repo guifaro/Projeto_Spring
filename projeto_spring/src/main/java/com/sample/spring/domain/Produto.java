@@ -1,5 +1,8 @@
 package com.sample.spring.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -23,8 +27,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Table(name = "produto")
-@EqualsAndHashCode(exclude = "tipoproduto")
-@ToString(exclude = "tipoproduto")
+@EqualsAndHashCode(exclude = {"tipoproduto","empresas"})
+@ToString(exclude = {"tipoproduto","empresas"})
 
 public class Produto {
 	
@@ -40,5 +44,7 @@ public class Produto {
 	@Column(name = "produto_name", nullable = false, length = 200)
 	private String name;
 	
+	@OneToMany(mappedBy = "produto")
+	private Set<EmpresaProduto> empresas = new HashSet<EmpresaProduto>();
 
 }
